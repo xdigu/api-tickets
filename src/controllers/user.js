@@ -75,27 +75,34 @@ class UserController {
             });
         }
 
-        const user = await User.findByPk(user_id);
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found.',
-            });
-        }
-
-        user.update({
-            name: name ? name : user.name,
-            email: email ? email : user.email
-        })
+        await User.findByPk(user_id)
             .then(user => {
-                return res.json({ success: true, data: user });
+                if (!user) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'User not found.',
+                    });
+                }
+
+                user.update({
+                    name: name ? name : user.name,
+                    email: email ? email : user.email
+                })
+                    .then(user_updated => {
+                        return res.json({
+                            success: true,
+                            data: user_updated
+                        });
+                    })
+                    .catch(err => {
+                        const errors = err.errors;
+                        messageHandler.modelError(res, errors);
+                    });
             })
             .catch(err => {
                 const errors = err.errors;
                 messageHandler.modelError(res, errors);
             });
-
     }
 
     async delete(req, res) {
@@ -117,7 +124,7 @@ class UserController {
             });
         }
 
-        await user.destroy()
+        await user.destroy();
 
         return res.json({
             success: true,

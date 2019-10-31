@@ -96,12 +96,17 @@ class CategoryController {
                     });
                 }
 
-                await category.update({ name });
-
-                return res.json({
-                    success: true,
-                    data: category,
-                });
+                await category.update({ name })
+                    .then(categoty_updated => {
+                        return res.json({
+                            success: true,
+                            data: categoty_updated,
+                        });
+                    })
+                    .catch(err => {
+                        const errors = err.errors;
+                        return messageHandler.modelError(res, errors);
+                    });
             })
             .catch(err => {
                 const errors = err.errors;

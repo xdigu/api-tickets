@@ -1,29 +1,29 @@
 module.exports = (sequelize, DataTypes) => {
     const Ticket = sequelize.define('Ticket', {
         subject: DataTypes.STRING,
-        is_close: DataTypes.BOOLEAN,
+        is_closed: DataTypes.BOOLEAN,
     });
 
     Ticket.associate = function (models) {
         Ticket.belongsTo(models.User
-            // , {
-            //     as: 'followed_user',
-            //     foreignKey: 'followed_id',
-            // }
+            , {
+                foreignKey: 'user_id',
+                as: 'User',
+            }
         );
 
         Ticket.belongsTo(models.Category
-            // , {
-            //     foreignKey: 'follower_id',
-            //     as: 'follower_user',
-            // }
+            , {
+                foreignKey: 'category_id',
+                as: 'Category',
+            }
         );
 
         Ticket.hasMany(models.TicketMessages
-            // , {
-            //     foreignKey: 'follower_id',
-            //     as: 'follower_user',
-            // }
+            , {
+                foreignKey: 'ticket_id',
+                as: 'TicketMessages',
+            }
         );
     };
 

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('TicketMessages', {
+    return queryInterface.createTable('Ticket_Messages', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -44,6 +44,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('TicketMessages');
+    return queryInterface.dropTable('Ticket_Messages');
   }
 };

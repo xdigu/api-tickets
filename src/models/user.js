@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
-
         name: {
             type: DataTypes.STRING,
             validate: {
@@ -23,17 +22,17 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = function (models) {
         User.hasMany(models.Ticket
-            // , {
-            //     as: 'followed_user',
-            //     foreignKey: 'followed_id',
-            // }
+            , {
+                foreignKey: 'user_id',
+                as: 'Ticket',
+            }
         );
 
         User.hasMany(models.TicketMessages
-            // , {
-            //     foreignKey: 'follower_id',
-            //     as: 'follower_user',
-            // }
+            , {
+                foreignKey: 'user_id',
+                as: 'TicketMessages',
+            }
         );
     }
 

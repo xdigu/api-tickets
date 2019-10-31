@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Category.associate = function (models) {
         Category.hasMany(models.Ticket
-            // , {
-            //     as: 'followed_user',
-            //     foreignKey: 'followed_id',
-            // }
+            , {
+                foreignKey: 'category_id',
+                as: 'Ticket',
+            }
         );
     };
 

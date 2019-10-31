@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
 
     TicketMessages.associate = function (models) {
         TicketMessages.belongsTo(models.User
-            // , {
-            //     as: 'followed_user',
-            //     foreignKey: 'followed_id',
-            // }
+            , {
+                foreignKey: 'user_id',
+                as: 'User',
+            }
         );
 
         TicketMessages.belongsTo(models.Ticket
-            // , {
-            //     as: 'followed_user',
-            //     foreignKey: 'followed_id',
-            // }
+            , {
+                foreignKey: 'ticket_id',
+                as: 'Ticket',
+            }
         );
     };
 

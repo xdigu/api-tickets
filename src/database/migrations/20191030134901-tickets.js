@@ -34,6 +34,7 @@ module.exports = {
       },
       is_closed: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       created_at: {
         type: Sequelize.DATE,

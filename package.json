@@ -14,5 +14,12 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/database/migrations/*.js",
+      "src/database/seeders/*.js",
+      "README.md"
+    ]
   }
 }

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             // }
         );
 
-        Ticket.belongsTo(models.Categoty
+        Ticket.belongsTo(models.Category
             // , {
             //     foreignKey: 'follower_id',
             //     as: 'follower_user',

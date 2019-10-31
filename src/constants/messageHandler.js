@@ -7,7 +7,6 @@ function modelError(res, errors) {
 
     if (errors && errors.length > 0) {
         errors.forEach((error, index) => {
-            console.log(index);
             if (index === 0) {
                 response['message'] = error.message
             }

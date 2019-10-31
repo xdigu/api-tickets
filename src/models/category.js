@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-    const Categoty = sequelize.define('Categoty', {
+    const Category = sequelize.define('Category', {
         name: DataTypes.STRING,
     });
 
-    Categoty.associate = function (models) {
-        Categoty.hasMany(models.Ticket
+    Category.associate = function (models) {
+        Category.hasMany(models.Ticket
             // , {
             //     as: 'followed_user',
             //     foreignKey: 'followed_id',
@@ -12,5 +12,5 @@ module.exports = (sequelize, DataTypes) => {
         );
     };
 
-    return Categoty;
+    return Category;
 }

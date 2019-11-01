@@ -2,6 +2,7 @@ const routes = require('express').Router();
 const UserController = require('./controllers/user');
 const CategoryController = require('./controllers/category');
 const TicketController = require('./controllers/ticket');
+const TicketMessagesController = require('./controllers/ticketMessages');
 
 
 routes.post('/users', UserController.create);
@@ -24,6 +25,13 @@ routes.get('/tickets', TicketController.index);
 routes.get('/tickets/:ticket_id', TicketController.getTicket);
 routes.put('/tickets/:ticket_id', TicketController.put);
 routes.delete('/tickets/:ticket_id', TicketController.delete);
+
+
+routes.post('/tickets/:ticket_id/ticketmessages', TicketMessagesController.create);
+routes.get('/tickets/:ticket_id/ticketmessages', TicketMessagesController.index);
+routes.get('/tickets/:ticket_id/ticketmessages/:message_id', TicketMessagesController.getTicketMessage);
+routes.put('/tickets/:ticket_id/ticketmessages/:message_id', TicketMessagesController.put);
+routes.delete('/tickets/:ticket_id/ticketmessages/:message_id', TicketMessagesController.delete);
 
 
 module.exports = routes;

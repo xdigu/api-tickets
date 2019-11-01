@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a795632f-eb45-4609-ad94-e60b00fb1929",
+		"_postman_id": "e4c36243-dc6f-4ddf-9f67-795184f36b8f",
 		"name": "Chamados - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Endriw\",\n\t\"email\": \"endriw@live.com\"\n}",
+							"raw": "{\n\t\"name\": \"User\",\n\t\"email\": \"user@user.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -95,7 +95,7 @@
 							"variable": [
 								{
 									"key": "user_id",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -116,7 +116,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Rodrigo ã Jorge\"\n}",
+							"raw": "{\n\t\"name\": \"User\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -137,7 +137,7 @@
 							"variable": [
 								{
 									"key": "user_id",
-									"value": "5"
+									"value": "1"
 								}
 							]
 						}
@@ -197,7 +197,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Suporte\"\n}",
+							"raw": "{\n\t\"name\": \"Suport\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -312,7 +312,7 @@
 							"variable": [
 								{
 									"key": "category_id",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}
@@ -359,7 +359,7 @@
 			"name": "Tickets",
 			"item": [
 				{
-					"name": "Create Tickets",
+					"name": "Create Ticket",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -372,7 +372,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"user_id\": 3,\n\t\"category_id\": 2,\n\t\"subject\": \"Teste\",\n\t\"message\": \"Teste msg\",\n\t\"is_closed\": false\n}",
+							"raw": "{\n\t\"user_id\": 1,\n\t\"category_id\": 1,\n\t\"subject\": \"new Ticket test\",\n\t\"message\": \"This is a ticket test\",\n\t\"is_closed\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -432,7 +432,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Task",
+					"name": "Get Ticket",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -469,6 +469,290 @@
 							"variable": [
 								{
 									"key": "task_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Ticket",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category_id\": 1,\n\t\"subject\": \"New Teste\",\n\t\"is_closed\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/tickets/:task_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":task_id"
+							],
+							"variable": [
+								{
+									"key": "task_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Ticket",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/tickets/:task_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":task_id"
+							],
+							"variable": [
+								{
+									"key": "task_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ticket Messages",
+			"item": [
+				{
+					"name": "Create Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\": 1,\n\t\"message\": \"Another message on ticket\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/tickets/:ticket_id/ticketmessages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":ticket_id",
+								"ticketmessages"
+							],
+							"variable": [
+								{
+									"key": "ticket_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/tickets/:ticket_id/ticketmessages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":ticket_id",
+								"ticketmessages"
+							],
+							"variable": [
+								{
+									"key": "ticket_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/tickets/:ticket_id/ticketmessages/:message_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":ticket_id",
+								"ticketmessages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "ticket_id",
+									"value": "1"
+								},
+								{
+									"key": "message_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"message\": \"Changing message.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3003/tickets/:ticket_id/ticketmessages/:message_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":ticket_id",
+								"ticketmessages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "ticket_id",
+									"value": "1"
+								},
+								{
+									"key": "message_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3003/tickets/:ticket_id/ticketmessages/:message_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"tickets",
+								":ticket_id",
+								"ticketmessages",
+								":message_id"
+							],
+							"variable": [
+								{
+									"key": "ticket_id",
+									"value": "1"
+								},
+								{
+									"key": "message_id",
 									"value": "1"
 								}
 							]

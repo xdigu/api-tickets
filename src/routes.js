@@ -10,7 +10,6 @@ routes.get('/users', UserController.index);
 routes.get('/users/:user_id', UserController.get);
 routes.put('/users/:user_id', UserController.put);
 routes.delete('/users/:user_id', UserController.delete);
-routes.post('/users', UserController.create);
 
 
 routes.post('/categories', CategoryController.create);

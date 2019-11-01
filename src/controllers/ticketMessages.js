@@ -7,6 +7,13 @@ class TicketMessagesController {
         const { ticket_id } = req.params;
         const { user_id, message } = req.body;
 
+        if (!ticket_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'You must provide a ticket_id.'
+            });
+        }
+
         TicketMessages.create({ ticket_id, user_id, message })
             .then(ticketMessages => {
                 return res.json({
@@ -15,8 +22,7 @@ class TicketMessagesController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -40,8 +46,7 @@ class TicketMessagesController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -78,8 +83,7 @@ class TicketMessagesController {
 
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -115,8 +119,7 @@ class TicketMessagesController {
 
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -155,8 +158,7 @@ class TicketMessagesController {
 
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 }

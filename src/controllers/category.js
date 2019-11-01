@@ -20,8 +20,7 @@ class CategoryController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -34,8 +33,7 @@ class CategoryController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -66,8 +64,7 @@ class CategoryController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
     }
 
@@ -99,13 +96,11 @@ class CategoryController {
                         });
                     })
                     .catch(err => {
-                        const errors = err.errors;
-                        return messageHandler.modelError(res, errors);
+                        return messageHandler.modelError(res, err);
                     });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
 
     }
@@ -137,8 +132,7 @@ class CategoryController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                return messageHandler.modelError(res, errors);
+                return messageHandler.modelError(res, err);
             });
 
     }

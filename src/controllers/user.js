@@ -11,8 +11,7 @@ class UserController {
                 return res.json({ success: true, data: user });
             })
             .catch(err => {
-                const errors = err.errors;
-                messageHandler.modelError(res, errors);
+                messageHandler.modelError(res, err);
             });
     }
 
@@ -22,8 +21,7 @@ class UserController {
                 return res.json({ success: true, data: users });
             })
             .catch(err => {
-                const errors = err.errors;
-                messageHandler.modelError(res, errors);
+                messageHandler.modelError(res, err);
             });
     }
 
@@ -37,7 +35,7 @@ class UserController {
             });
         }
 
-        await User.findByPk(user_id,{
+        await User.findByPk(user_id, {
             attributes: ['id', 'name', 'email'],
         })
             .then(user => {
@@ -54,8 +52,7 @@ class UserController {
                 }
             })
             .catch(err => {
-                const errors = err.errors;
-                messageHandler.modelError(res, errors);
+                messageHandler.modelError(res, err);
             });
     }
 
@@ -87,13 +84,11 @@ class UserController {
                         });
                     })
                     .catch(err => {
-                        const errors = err.errors;
-                        messageHandler.modelError(res, errors);
+                        messageHandler.modelError(res, err);
                     });
             })
             .catch(err => {
-                const errors = err.errors;
-                messageHandler.modelError(res, errors);
+                messageHandler.modelError(res, err);
             });
     }
 
@@ -124,8 +119,7 @@ class UserController {
                 });
             })
             .catch(err => {
-                const errors = err.errors;
-                messageHandler.modelError(res, errors);
+                messageHandler.modelError(res, err);
             });
     }
 }

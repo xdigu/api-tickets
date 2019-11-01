@@ -57,19 +57,19 @@ class TicketController {
         Ticket.findByPk(ticket_id, {
             attributes: ['id', 'subject', 'is_closed'],
             include: [{
+                association: 'User',
+                attributes: ['name', 'email'],
+            }, {
+                association: 'Category',
+                attributes: ['name'],
+            }, {
                 association: 'TicketMessages',
                 attributes: ['id', 'message'],
                 required: false,
                 include: [{
                     association: 'User',
                     attributes: ['name', 'email'],
-                    required: true,
                 },]
-            }, {
-                association: 'User',
-                as: 'ticket_user',
-                attributes: ['name', 'email'],
-                required: true,
             }]
         })
             .then(ticket => {

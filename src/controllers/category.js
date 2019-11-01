@@ -49,7 +49,9 @@ class CategoryController {
             });
         }
 
-        await Category.findByPk(category_id)
+        await Category.findByPk(category_id, {
+            attributes: ['id', 'name'],
+        })
             .then(category => {
                 if (!category) {
                     return res.status(404).json({

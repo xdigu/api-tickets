@@ -37,7 +37,9 @@ class UserController {
             });
         }
 
-        await User.findByPk(user_id)
+        await User.findByPk(user_id,{
+            attributes: ['id', 'name', 'email'],
+        })
             .then(user => {
                 if (!user) {
                     return res.status(404).json({

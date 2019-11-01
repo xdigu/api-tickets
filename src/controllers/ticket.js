@@ -55,14 +55,22 @@ class TicketController {
         }
 
         Ticket.findByPk(ticket_id, {
-            include: {
+            attributes: ['id', 'subject', 'is_closed'],
+            include: [{
                 association: 'TicketMessages',
+                attributes: ['id', 'message'],
                 required: false,
                 include: [{
                     association: 'User',
+                    attributes: ['name', 'email'],
                     required: true,
                 },]
-            }
+            }, {
+                association: 'User',
+                as: 'ticket_user',
+                attributes: ['name', 'email'],
+                required: true,
+            }]
         })
             .then(ticket => {
                 if (!ticket) {
@@ -84,12 +92,75 @@ class TicketController {
     }
 
     async put(req, res) {
+        const { ticket_id } = req.params;
+        const { subject, category_id, is_closed } = req.body;
 
+        if (!ticket_id || isNaN(ticket_id)) {
+            return res.status(400).json({
+                success: false,
+                message: 'You must provide a ticket_id.'
+            });
+        }
+
+        await Ticket.findByPk(ticket_id)
+            .then(ticket => {
+                if (!ticket) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'Ticket not found.'
+                    });
+                }
+
+                ticket.update({ subject, category_id, is_closed })
+                    .then(ticket_updated => {
+                        return res.status(200).json({
+                            success: true,
+                            data: ticket_updated
+                        });
+                    })
+                    .catch(err => {
+                        const errors = err.errors;
+                        return messageHandler.modelError(res, errors);
+                    });
+            })
+            .catch(err => {
+                const errors = err.errors;
+                return messageHandler.modelError(res, errors);
+            });
     }
 
     async delete(req, res) {
+        const { ticket_id } = req.params;
 
+        if (!ticket_id || isNaN(ticket_id)) {
+            return res.status(400).json({
+                success: false,
+                message: 'You must provide a ticket_id.'
+            });
+        }
+
+        await Ticket.findByPk(ticket_id)
+            .then(ticket => {
+                if (!ticket) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'Ticket was not found.'
+                    });
+                }
+
+                ticket.destroy();
+
+                return res.status(200).json({
+                    success: true,
+                    message: 'Ticket was deleted.'
+                });
+            })
+            .catch(err => {
+                const errors = err.errors;
+                return messageHandler.modelError(res, errors);
+            });
     }
 }
+
 
 module.exports = new TicketController();

@@ -14,9 +14,9 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       ticket_id: {
         type: Sequelize.INTEGER,
@@ -24,9 +24,9 @@ module.exports = {
         references: {
           model: 'Tickets',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       message: {
         type: Sequelize.STRING,

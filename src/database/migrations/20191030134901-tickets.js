@@ -14,9 +14,9 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       category_id: {
         allowNull: false,
@@ -24,9 +24,9 @@ module.exports = {
         references: {
           model: 'Categories',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       subject: {
         type: Sequelize.STRING,

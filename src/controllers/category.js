@@ -80,13 +80,6 @@ class CategoryController {
             });
         }
 
-        if (!name) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide name on body.',
-            });
-        }
-
         await Category.findByPk(category_id)
             .then(async category => {
                 if (!category) {
@@ -126,7 +119,7 @@ class CategoryController {
         }
 
         await Category.findByPk(category_id)
-            .then(async category => {
+            .then(category => {
                 if (!category) {
                     return res.status(404).json({
                         success: false,
@@ -134,7 +127,7 @@ class CategoryController {
                     });
                 }
 
-                await category.destroy();
+                category.destroy();
 
                 return res.status(200).json({
                     success: false,

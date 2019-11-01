@@ -68,13 +68,6 @@ class UserController {
             });
         }
 
-        if (!name && !email) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide name or email on body.',
-            });
-        }
-
         await User.findByPk(user_id)
             .then(user => {
                 if (!user) {
@@ -84,10 +77,7 @@ class UserController {
                     });
                 }
 
-                user.update({
-                    name: name ? name : user.name,
-                    email: email ? email : user.email
-                })
+                user.update({ name, email })
                     .then(user_updated => {
                         return res.json({
                             success: true,
@@ -115,21 +105,26 @@ class UserController {
             });
         }
 
-        const user = await User.findByPk(user_id);
+        await User.findByPk(user_id)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'User not found.',
+                    });
+                }
 
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found.',
+                user.destroy();
+
+                return res.json({
+                    success: true,
+                    message: 'User was deleted.',
+                });
+            })
+            .catch(err => {
+                const errors = err.errors;
+                messageHandler.modelError(res, errors);
             });
-        }
-
-        await user.destroy();
-
-        return res.json({
-            success: true,
-            message: 'User was deleted.',
-        });
     }
 }
 

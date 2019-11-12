@@ -1,39 +1,33 @@
 const { Category } = require('../models');
-const messageHandler = require('../constants/messageHandler');
+const responseHandler = require('../constants/responseHandler');
 
 class CategoryController {
     async create(req, res) {
         const { name } = req.body;
 
         if (!name) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provid a name.'
-            });
+            const message = 'You must provid a name.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Category.create({ name })
             .then(category => {
-                return res.json({
-                    success: true,
-                    data: category,
-                });
+                const data = category;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
     async index(req, res) {
         await Category.findAll()
             .then(categories => {
-                return res.json({
-                    success: true,
-                    data: categories,
-                });
+                const data = categories;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -41,10 +35,8 @@ class CategoryController {
         const { category_id } = req.params;
 
         if (!category_id || isNaN(category_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a category_id.',
-            });
+            const message = 'You must provide a category_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Category.findByPk(category_id, {
@@ -52,19 +44,15 @@ class CategoryController {
         })
             .then(category => {
                 if (!category) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Category not found.',
-                    });
+                    const message = 'Category not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
-                return res.json({
-                    success: true,
-                    data: category,
-                });
+                const data = category;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -73,34 +61,28 @@ class CategoryController {
         const { name } = req.body;
 
         if (!category_id || isNaN(category_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a category_id.',
-            });
+            const message = 'You must provide a category_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Category.findByPk(category_id)
             .then(async category => {
                 if (!category) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Category not found.',
-                    });
+                    const message = 'Category not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 await category.update({ name })
                     .then(categoty_updated => {
-                        return res.json({
-                            success: true,
-                            data: categoty_updated,
-                        });
+                        const data = categoty_updated;
+                        return responseHandler.success(res, { data });
                     })
                     .catch(err => {
-                        return messageHandler.modelError(res, err);
+                        return responseHandler.modelError(res, err);
                     });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
 
     }
@@ -109,32 +91,25 @@ class CategoryController {
         const { category_id } = req.params;
 
         if (!category_id || isNaN(category_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a category_id.',
-            });
+            const message = 'You must provide a category_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Category.findByPk(category_id)
             .then(category => {
                 if (!category) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Category not found.',
-                    });
+                    const message = 'Category not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 category.destroy();
 
-                return res.status(200).json({
-                    success: false,
-                    message: 'Category was deleted.',
-                });
+                const message = 'Category was deleted';
+                return responseHandler.notFound(res, { message });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
-
     }
 }
 

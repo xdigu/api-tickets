@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const messageHandler = require('../constants/messageHandler');
+const responseHandler = require('../constants/responseHandler');
 
 
 class UserController {
@@ -8,20 +8,22 @@ class UserController {
 
         await User.create({ name, email })
             .then(user => {
-                return res.json({ success: true, data: user });
+                const data = user;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                messageHandler.modelError(res, err);
+                responseHandler.modelError(res, err);
             });
     }
 
     async index(req, res) {
         await User.findAll()
             .then(users => {
-                return res.json({ success: true, data: users });
+                const data = users;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                messageHandler.modelError(res, err);
+                responseHandler.modelError(res, err);
             });
     }
 
@@ -29,10 +31,8 @@ class UserController {
         const { user_id } = req.params;
 
         if (!user_id || isNaN(user_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a user_id.',
-            });
+            const message = 'You must provide a user_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await User.findByPk(user_id, {
@@ -40,19 +40,15 @@ class UserController {
         })
             .then(user => {
                 if (!user) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'User not found.',
-                    });
+                    const message = 'User not found.';
+                    return responseHandler.notFound(res, { message });
                 } else {
-                    return res.json({
-                        success: true,
-                        data: user,
-                    });
+                    const data = user;
+                    return responseHandler.success(res, { data });
                 }
             })
             .catch(err => {
-                messageHandler.modelError(res, err);
+                responseHandler.modelError(res, err);
             });
     }
 
@@ -61,34 +57,28 @@ class UserController {
         const { name, email } = req.body;
 
         if (!user_id || isNaN(user_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a user_id.',
-            });
+            const message = 'You must provide a user_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await User.findByPk(user_id)
             .then(user => {
                 if (!user) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'User not found.',
-                    });
+                    const message = 'User not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 user.update({ name, email })
                     .then(user_updated => {
-                        return res.json({
-                            success: true,
-                            data: user_updated
-                        });
+                        const data = user_updated;
+                        return responseHandler.success(res, { data });
                     })
                     .catch(err => {
-                        messageHandler.modelError(res, err);
+                        responseHandler.modelError(res, err);
                     });
             })
             .catch(err => {
-                messageHandler.modelError(res, err);
+                responseHandler.modelError(res, err);
             });
     }
 
@@ -96,30 +86,24 @@ class UserController {
         const { user_id } = req.params;
 
         if (!user_id || isNaN(user_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a user_id.',
-            });
+            const message = 'You must provide a user_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await User.findByPk(user_id)
             .then(user => {
                 if (!user) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'User not found.',
-                    });
+                    const message = 'User not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 user.destroy();
 
-                return res.json({
-                    success: true,
-                    message: 'User was deleted.',
-                });
+                const message = 'User was deleted.';
+                return responseHandler.success(res, { message });
             })
             .catch(err => {
-                messageHandler.modelError(res, err);
+                responseHandler.modelError(res, err);
             });
     }
 }

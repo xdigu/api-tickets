@@ -1,5 +1,5 @@
 const { Ticket } = require('../models');
-const messageHandler = require('../constants/messageHandler');
+const responseHandler = require('../constants/responseHandler');
 
 
 class TicketController {
@@ -19,26 +19,22 @@ class TicketController {
             include: ['TicketMessages']
         })
             .then(ticket => {
-                return res.json({
-                    success: true,
-                    data: ticket
-                });
+                const data = ticket;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
     async index(req, res) {
         await Ticket.findAll()
             .then(tickets => {
-                return res.json({
-                    success: true,
-                    data: tickets
-                });
+                const data = tickets;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -46,10 +42,8 @@ class TicketController {
         const { ticket_id } = req.params;
 
         if (!ticket_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a ticket_id.'
-            });
+            const message = 'You must provide a ticket_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         Ticket.findByPk(ticket_id, {
@@ -72,19 +66,15 @@ class TicketController {
         })
             .then(ticket => {
                 if (!ticket) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Ticket not found.'
-                    });
+                    const message = 'Ticket not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
-                return res.json({
-                    success: true,
-                    data: ticket
-                });
+                const data = ticket;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -93,34 +83,28 @@ class TicketController {
         const { subject, category_id, is_closed } = req.body;
 
         if (!ticket_id || isNaN(ticket_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a ticket_id.'
-            });
+            const message = 'You must provide a ticket_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Ticket.findByPk(ticket_id)
             .then(ticket => {
                 if (!ticket) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Ticket not found.'
-                    });
+                    const message = 'Ticket not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 ticket.update({ subject, category_id, is_closed })
                     .then(ticket_updated => {
-                        return res.status(200).json({
-                            success: true,
-                            data: ticket_updated
-                        });
+                        const data = ticket_updated
+                        return responseHandler.success(res, { data });
                     })
                     .catch(err => {
-                        return messageHandler.modelError(res, err);
+                        return responseHandler.modelError(res, err);
                     });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -128,30 +112,24 @@ class TicketController {
         const { ticket_id } = req.params;
 
         if (!ticket_id || isNaN(ticket_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a ticket_id.'
-            });
+            const message = 'You must provide a ticket_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         await Ticket.findByPk(ticket_id)
             .then(ticket => {
                 if (!ticket) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Ticket was not found.'
-                    });
+                    const message = 'Ticket not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 ticket.destroy();
 
-                return res.status(200).json({
-                    success: true,
-                    message: 'Ticket was deleted.'
-                });
+                const message = 'Ticket was deleted.';
+                return responseHandler.success(res, { message });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 }

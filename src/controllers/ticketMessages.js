@@ -1,5 +1,5 @@
 const { TicketMessages } = require('../models');
-const messageHandler = require('../constants/messageHandler');
+const responseHandler = require('../constants/responseHandler');
 
 class TicketMessagesController {
 
@@ -8,21 +8,17 @@ class TicketMessagesController {
         const { user_id, message } = req.body;
 
         if (!ticket_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a ticket_id.'
-            });
+            const message = 'You must provide a ticket_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         TicketMessages.create({ ticket_id, user_id, message })
             .then(ticketMessages => {
-                return res.json({
-                    success: true,
-                    data: ticketMessages
-                });
+                const data = ticketMessages;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -40,13 +36,11 @@ class TicketMessagesController {
             },
         })
             .then(ticketMessages => {
-                return res.json({
-                    success: true,
-                    data: ticketMessages
-                });
+                const data = ticketMessages;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -54,10 +48,8 @@ class TicketMessagesController {
         const { ticket_id, message_id } = req.params;
 
         if (!message_id || !ticket_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide ticket_id and message_id.'
-            });
+            const message = 'You must provide ticket_id and message_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         TicketMessages.findOne({
@@ -70,20 +62,15 @@ class TicketMessagesController {
         })
             .then(ticketMessage => {
                 if (!ticketMessage) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Message was not found.'
-                    });
+                    const message = 'Message was not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
-                return res.json({
-                    success: true,
-                    data: ticketMessage
-                });
-
+                const data = ticketMessage;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -92,10 +79,8 @@ class TicketMessagesController {
         const { message } = req.body;
 
         if (!message_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a messages_id.'
-            });
+            const message = 'You must provide a messages_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         TicketMessages.findOne({
@@ -104,22 +89,17 @@ class TicketMessagesController {
         })
             .then(ticketMessage => {
                 if (!ticketMessage) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Message was not found.'
-                    });
+                    const message = 'Message was not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 ticketMessage.update({ message });
 
-                return res.json({
-                    success: true,
-                    data: ticketMessage
-                });
-
+                const data = ticketMessage;
+                return responseHandler.success(res, { data });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 
@@ -127,10 +107,8 @@ class TicketMessagesController {
         const { ticket_id, message_id } = req.params;
 
         if (!message_id) {
-            return res.status(400).json({
-                success: false,
-                message: 'You must provide a messages_id.'
-            });
+            const message = 'You must provide a messages_id.';
+            return responseHandler.badRequest(res, { message });
         }
 
         TicketMessages.findOne({
@@ -143,22 +121,17 @@ class TicketMessagesController {
         })
             .then(ticketMessage => {
                 if (!ticketMessage) {
-                    return res.status(404).json({
-                        success: false,
-                        message: 'Message was not found.'
-                    });
+                    const message = 'Message was not found.';
+                    return responseHandler.notFound(res, { message });
                 }
 
                 ticketMessage.destroy();
 
-                return res.json({
-                    success: true,
-                    message: 'Message was deleted.'
-                });
-
+                const message = 'Message was deleted.';
+                return responseHandler.success(res, { message });
             })
             .catch(err => {
-                return messageHandler.modelError(res, err);
+                return responseHandler.modelError(res, err);
             });
     }
 }

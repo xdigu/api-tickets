@@ -12,6 +12,8 @@ COPY . .
 
 RUN npx sequelize-cli db:migrate
 
+RUN npx sequelize-cli db:seed:all
+
 COPY --chown=node:node . .
 
 USER node

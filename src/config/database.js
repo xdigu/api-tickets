@@ -1,5 +1,12 @@
-if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
-    require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+/**
+ * Used to defne witch environment will be based in NODE_ENV
+ * 
+ * The accpeted environment is: test, dev and prd
+ */
+const NODE_ENV = process.env.NODE_ENV;
+
+if (NODE_ENV) {
+    require('dotenv').config({ path: NODE_ENV === 'prd' ? '.env' : `.env.${NODE_ENV}` })
 }
 
 module.exports = {

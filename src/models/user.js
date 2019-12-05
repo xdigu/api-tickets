@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
         },
-    });
+    }, { tableName: 'Users' });
 
     User.associate = function (models) {
         User.hasMany(models.Ticket

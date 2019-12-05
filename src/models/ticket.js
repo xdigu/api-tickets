@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const Ticket = sequelize.define('Ticket', {
         subject: DataTypes.STRING,
         is_closed: DataTypes.BOOLEAN,
-    });
+    }, { tableName: 'Tickets' });
 
     Ticket.associate = function (models) {
         Ticket.belongsTo(models.User

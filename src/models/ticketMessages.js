@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const TicketMessages = sequelize.define('TicketMessages', {
         message: DataTypes.STRING,
-    });
+    }, { tableName: 'Ticket_Messages' });
 
     TicketMessages.associate = function (models) {
         TicketMessages.belongsTo(models.User

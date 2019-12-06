@@ -9,7 +9,7 @@ if (NODE_ENV) {
     require('dotenv').config({ path: NODE_ENV === 'prd' ? '.env' : `.env.${NODE_ENV}` })
 }
 
-module.exports = {
+const dataBaseConnection = {
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -21,5 +21,10 @@ module.exports = {
         timestamps: true,
         underscored: true,
         underscoredAll: true,
-    },
-};
+    }
+}
+
+if (process.env.DB_PORT)
+    dataBaseConnection.port = process.env.DB_PORT
+
+module.exports = dataBaseConnection

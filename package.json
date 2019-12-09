@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "sequelize db:migrate && sequelize db:seed:all && node app.js",
+    "startContainer": "sequelize db:migrate && node app.js",
     "dev": "NODE_ENV=dev sequelize db:migrate && nodemon app.js"
   },
   "dependencies": {
